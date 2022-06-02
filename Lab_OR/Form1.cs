@@ -57,11 +57,11 @@ namespace Lab_OR
         private void button2_Click(object sender, EventArgs e)
         {
             // Нормализация
-            foreach (DataGridViewRow row in this.dataGridView1.Rows)
+           /* foreach (DataGridViewRow row in this.dataGridView1.Rows)
             {
                 if (Convert.ToString(row.Cells[0].Value) == "")
                     break;
-                double maximum = 0;
+                
 
                 for (int i = 1; i < 5; i++)
                 {
@@ -75,7 +75,32 @@ namespace Lab_OR
                 {
                     row.Cells[i].Value = Convert.ToDouble(row.Cells[i].Value) / maximum;
                 }
+            }*/
+            double maximum = 0;
+            for(int i = 1; i<4; i++)
+            {
+                for(int j = 0; j<dataGridView1.RowCount-1; j++)
+                {
+                    if (j == 0)
+                    {
+                        maximum = Convert.ToDouble(dataGridView1[i, j].Value);
+
+                    }
+                    if (maximum < Convert.ToDouble(dataGridView1[i, j].Value))
+                    {
+                        maximum = Convert.ToDouble(dataGridView1[i, j].Value);
+                    }
+                    
+                }
+                for (int j = 0; j < dataGridView1.RowCount - 1; j++)
+                {
+                    dataGridView1[i, j].Value = Convert.ToDouble(dataGridView1[i, j].Value) / maximum;
+                }
+                maximum = 0;
             }
+
+            
+
 
             int main_criteria = 1;
             for (int i = 0; i < dataGridView1.ColumnCount; i++)
@@ -111,9 +136,11 @@ namespace Lab_OR
 
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
+                
                 if (dataGridView1.Rows[i].Selected == true &&
                     Convert.ToDouble(dataGridView1.Rows[i].Cells[5].Value) >= 0.3)
                 {
+                    dataGridView1.Rows[i].Cells[5].Value = Convert.ToDouble(dataGridView1.Rows[i].Cells[5].Value) + 0.3;
                     label1.Text = Convert.ToString(dataGridView1.Rows[i].Cells[0].Value);
                 }
             }
